@@ -1,4 +1,5 @@
 const { response, request } = require('express');
+const User = require('../models/user');
 
 const allUsers = (req, res = response) => {
   const { page = 1, per_page = 25 } = req.query;
@@ -25,10 +26,12 @@ const destroyUser = (req, res = response) => {
   });
 }
 
-const createUser = (req, res = response) => {
-  const { name , age } = req.body;
+const createUser = async (req, res = response) => {
+  const body = req.body;
+  const user = new User(body);
+  await user.save();
   res.json({
-    message: 'get Api'
+    user
   });
 }
 

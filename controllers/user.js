@@ -50,7 +50,7 @@ const updateUser = async (req, res = response) => {
 
   if ( password ) {
     const salt = bcryptjs.genSaltSync();
-    userres.password = bcyrptjs.hashSync(password, salt);
+    userres.password = bcryptjs.hashSync(password, salt);
   }
   const user = await User.findByIdAndUpdate(id, userres, { new: true });
   res.json({

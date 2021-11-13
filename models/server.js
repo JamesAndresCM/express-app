@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const { dbConnection } = require('../database/config');
+var morgan = require('morgan')
+const { dbConnection } = require('../config/database');
+const expressConfig = require('../config/express');
 
 class Server {
   constructor(){
@@ -16,8 +18,8 @@ class Server {
     this.app.use( cors() );
     this.app.use( express.json() );
     this.app.use( express.static('public'));
+    this.app.use( morgan('combined') );
   }
-
 
   routes(){
     this.app.use(this.userPath, require('../routes/user'));
@@ -28,6 +30,7 @@ class Server {
   }
 
   listen() {
+    expressConfig(this.app);
     this.app.listen(this.port, () => {
       console.log('app listening on port:', this.port);
     })

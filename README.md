@@ -1,9 +1,9 @@
-### Express App
+## Express App
 
-## Setup
+### Setup
 - Run `npm install`
 - Set Environment variables rename .env_sample to .env
 - Execute app: `node app`
 
-## Endpoints
+### Endpoints
 - [Source](https://documenter.getpostman.com/view/3505861/UVREiiyD)

@@ -33,8 +33,8 @@ const destroyUser = async (req, res = response) => {
 }
 
 const createUser = async (req, res = response) => {
-  const { name, email, password, role } = req.body;
-  const user = new User({name, email, password, role});
+  const { name, email, password } = req.body;
+  const user = new User({name, email, password});
   const salt = bcryptjs.genSaltSync();
   user.password = bcryptjs.hashSync(password, salt);
   await user.save();
@@ -46,7 +46,7 @@ const createUser = async (req, res = response) => {
 
 const updateUser = async (req, res = response) => {
   const { id } = req.params;
-  const { _id, role, password, google, email, ...userres } = req.body;
+  const { _id, password, google, email, ...userres } = req.body;
 
   if ( password ) {
     const salt = bcryptjs.genSaltSync();

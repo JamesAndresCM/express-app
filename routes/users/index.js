@@ -7,7 +7,7 @@ const { validateJWT } = require('../../middlewares/validate-jwt.js');
 const { isAdminRole, hasRole } = require('../../middlewares/validate-role.js');
 const { isValidRole, isValidEmail, userExists } = require('../../helpers/db-validators.js');
 
-router.get('/', [validateJWT, hasRole('ADMIN', 'USER')],allUsers);
+router.get('/', [validateJWT, isAdminRole],allUsers);
 router.get('/:id',[
   check('id', 'not valid id').isMongoId(),
   check('id').custom( userExists ),
@@ -26,7 +26,6 @@ router.post('/', [
   check('email', 'this is not valid email').isEmail(),
   check('name', 'name must be exists').not().isEmpty(),
   check('password', 'password must be exists, and greather than 6 letters').isLength({min: 6}),
-  check('role').custom( isValidRole ),
   validateFields
 ], createUser);
 

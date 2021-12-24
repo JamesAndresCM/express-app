@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { allUsers, showUser, destroyUser, updateUser, createUser } = require('../controllers/users');
+const { allUsers, showUser, destroyUser, updateUser, createUser } = require('../../controllers/users');
 const router = Router();
-const { validateFields } = require('../middlewares/validator.js');
-const { validateJWT } = require('../middlewares/validate-jwt.js');
-const { isAdminRole, hasRole } = require('../middlewares/validate-role.js');
-const { isValidRole, isValidEmail, userExists } = require('../helpers/db-validators.js');
+const { validateFields } = require('../../middlewares/validator.js');
+const { validateJWT } = require('../../middlewares/validate-jwt.js');
+const { isAdminRole, hasRole } = require('../../middlewares/validate-role.js');
+const { isValidRole, isValidEmail, userExists } = require('../../helpers/db-validators.js');
 
 router.get('/', [validateJWT, hasRole('ADMIN', 'USER')],allUsers);
 router.get('/:id',[

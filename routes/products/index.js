@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { validateFields } = require('../middlewares/validator');
-const { validateJWT } = require('../middlewares/validate-jwt.js');
-const { createProduct, allProducts, showProduct, updateProduct, destroyProduct } = require('../controllers/products');
-const { isAdminRole } = require('../middlewares/validate-role.js');
-const { categoryExists, productExists } = require('../helpers/db-validators.js');
+const { validateFields } = require('../../middlewares/validator');
+const { validateJWT } = require('../../middlewares/validate-jwt.js');
+const { createProduct, allProducts, showProduct, updateProduct, destroyProduct } = require('../../controllers/products');
+const { isAdminRole } = require('../../middlewares/validate-role.js');
+const { categoryExists, productExists } = require('../../helpers/db-validators.js');
 
 const router = Router();
 router.post('/', [ 

@@ -3,6 +3,7 @@ const cors = require('cors');
 var morgan = require('morgan')
 const { dbConnection } = require('../config/database');
 const expressConfig = require('../config/express');
+const routes = require('../routes');
 
 class Server {
   constructor(){
@@ -28,11 +29,11 @@ class Server {
   }
 
   routes(){
-    this.app.use(this.paths.auth, require('../routes/auth'));
-    this.app.use(this.paths.users, require('../routes/users'));
-    this.app.use(this.paths.categories, require('../routes/categories'));
-    this.app.use(this.paths.products, require('../routes/products'));
-    this.app.use(this.paths.search, require('../routes/search'));
+    this.app.use(this.paths.auth, routes.authRouter);
+    this.app.use(this.paths.users, routes.usersRouter);
+    this.app.use(this.paths.categories, routes.categoriesRouter);
+    this.app.use(this.paths.products, routes.productsRouter);
+    this.app.use(this.paths.search, routes.searchRouter);
   }
 
   async connDb() {

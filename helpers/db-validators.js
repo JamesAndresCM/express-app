@@ -38,10 +38,41 @@ const productExists = async ( id ) => {
   }
 }
 
+const permittedCollection = ( collection = '', collections = []) => {
+  const collInclude = collections.includes( collection );
+  if ( !collInclude ) {
+      throw new Error(`collection ${ collection } is not permitted, ${ collections }`);
+  }
+  return true;
+}
+
+const validateImgModel = async (id, collection = '') => {
+  let model;
+  switch ( collection ) {
+      case 'users':
+          model = await User.find({"_id": id, status: true});
+          if ( !model ) {
+            throw new Error(`${model} ${id} not found`);
+          }
+      break;
+      case 'products':
+          model = await Product.find({"_id": id, status: true});
+          if ( !model ) {
+            throw new Error(`${model} ${id} not found`);
+          }
+      break;
+      default:
+          return Error('Wrong entity');
+  }
+  return model;
+}
+
 module.exports = {
   isValidRole,
   isValidEmail,
   userExists,
   categoryExists,
-  productExists
+  productExists,
+  permittedCollection,
+  validateImgModel
 }

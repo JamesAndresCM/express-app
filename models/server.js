@@ -4,6 +4,7 @@ var morgan = require('morgan')
 const { dbConnection } = require('../config/database');
 const expressConfig = require('../config/express');
 const routes = require('../routes');
+const fileUpload = require('express-fileupload');
 
 class Server {
   constructor(){
@@ -14,7 +15,8 @@ class Server {
       categories: '/api/v1/categories',
       products: '/api/v1/products',
       search:   '/api/v1/search',
-      auth: '/login'
+      auth: '/login',
+      upload: '/api/v1/upload'
     }
     this.connDb();
     this.middlewares();
@@ -26,6 +28,10 @@ class Server {
     this.app.use( express.json() );
     this.app.use( express.static('public'));
     this.app.use( morgan('combined') );
+    this.app.use( fileUpload({
+      useTempFiles: true,
+      tempFileDir: '/tmp/'
+    }));
   }
 
   routes(){
@@ -34,6 +40,7 @@ class Server {
     this.app.use(this.paths.categories, routes.categoriesRouter);
     this.app.use(this.paths.products, routes.productsRouter);
     this.app.use(this.paths.search, routes.searchRouter);
+    this.app.use(this.paths.upload, routes.uploadRoutes);
   }
 
   async connDb() {
